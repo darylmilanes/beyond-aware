@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond Aware</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#004080',
+                        secondary: '#474747',
+                        accent: '#F4D03F', // Muted yellow
+                        offwhite: '#fafeff',
+                        surface: '#ffffff'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fafeff;
+            color: #474747;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:active {
+            transform: scale(0.98);
+        }
+
+        /* Hide scrollbar for clean horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #004080;
+            width: 24px;
+            height: 24px;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-primary text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showHome()">
+                <i class="ph-fill ph-chart-bar text-accent text-2xl"></i>
+                <h1 class="font-bold text-lg tracking-wide">Beyond Aware</h1>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="app" class="flex-grow max-w-4xl mx-auto w-full">
+        
+        <!-- VIEW: HOME -->
+        <div id="home-view" class="fade-in">
+            <!-- Hero Section -->
+            <section class="px-6 py-12 text-center bg-gradient-to-b from-blue-50 to-transparent">
+                <h2 class="text-4xl font-bold text-primary mb-2">Beyond Aware</h2>
+                <h3 class="text-xl font-semibold text-secondary mb-6 tracking-wide">Where Understanding Becomes Behavior</h3>
+                
+                <div class="max-w-xl mx-auto relative">
+                    <div class="absolute -left-4 -top-4 text-accent/20 text-6xl font-serif">“</div>
+                    <p class="text-secondary text-lg leading-relaxed italic z-10 relative">
+                        True change doesn't happen when we just know better. It happens when we do better. <br>
+                        <span class="font-bold text-primary not-italic mt-2 block">Know. Understand. Transform.</span>
+                    </p>
+                    <div class="absolute -right-4 -bottom-4 text-accent/20 text-6xl font-serif">”</div>
+                </div>
+
+                <button onclick="document.getElementById('topics-grid').scrollIntoView({behavior: 'smooth'})" class="mt-8 bg-primary text-white px-8 py-3 rounded-full font-semibold shadow-lg active:bg-blue-900 hover:bg-blue-800 transition transform hover:-translate-y-1 flex items-center gap-2 mx-auto">
+                    Start the Shift <i class="ph-bold ph-arrow-down"></i>
+                </button>
+            </section>
+
+            <!-- Topics Grid -->
+            <section id="topics-grid" class="px-4 py-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5" id="cards-container">
+                    <!-- Cards injected via JS -->
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: TOPIC DETAIL -->
+        <div id="detail-view" class="hidden">
+            <!-- Sticky Sub-header -->
+            <div class="bg-white border-b sticky top-[60px] z-40 px-4 py-3 flex items-center gap-3 shadow-sm">
+                <button onclick="showHome()" class="text-secondary hover:text-primary">
+                    <i class="ph-bold ph-arrow-left text-xl"></i>
+                </button>
+                <h2 id="detail-title" class="font-bold text-lg text-primary truncate">Topic Title</h2>
+            </div>
+
+            <div class="px-5 py-8 animate-fade-in">
+                <!-- Topic Intro -->
+                <div class="mb-8">
+                    <span class="text-xs font-bold tracking-wider text-accent uppercase bg-primary px-2 py-1 rounded-sm">Focus Area</span>
+                    <h1 id="detail-hero-title" class="text-3xl font-bold text-primary mt-3 mb-4 leading-tight"></h1>
+                    <!-- detail-desc now accepts HTML for full content -->
+                    <div class="text-secondary leading-relaxed space-y-4" id="detail-desc">
+                        Deep dive content loading...
+                    </div>
+                </div>
+
+                <!-- Content Structure -->
+                <div class="space-y-6">
+                    
+                    <!-- Section: The 5 Sub-Topics -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                        <h3 class="font-bold text-primary text-lg mb-4 flex items-center gap-2">
+                            <i class="ph-duotone ph-list-numbers"></i> 5 Key Areas
+                        </h3>
+                        <ul id="detail-subtopics" class="space-y-3">
+                            <!-- Injected via JS -->
+                        </ul>
+                    </div>
+
+                    <!-- Section: Behavioral Focus -->
+                    <div class="bg-blue-50 rounded-xl p-5 border-l-4 border-primary">
+                        <h3 class="font-bold text-primary mb-2">Behavioral Focus</h3>
+                        <p id="detail-behavior" class="text-sm text-gray-700 italic">
+                            <!-- Injected -->
+                        </p>
+                    </div>
+
+                    <!-- Section: Issues & Concerns -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                        <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2">
+                            <i class="ph-fill ph-warning-circle"></i> Issues & Concerns
+                        </h3>
+                        <p id="detail-issues" class="text-secondary text-sm leading-relaxed">
+                            <!-- Injected -->
+                        </p>
+                    </div>
+
+                    <!-- Section: Moving Beyond (Resolution) -->
+                    <div class="bg-accent/10 rounded-xl p-5 border border-accent/30">
+                        <h3 class="font-bold text-primary mb-3 flex items-center gap-2">
+                            <i class="ph-fill ph-rocket-launch text-primary"></i> Moving Beyond
+                        </h3>
+                        <div class="bg-white/60 p-3 rounded-lg">
+                            <p id="detail-resolution" class="font-medium text-secondary text-sm">
+                                <!-- Injected -->
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <button id="download-btn" onclick="downloadPDF()" class="bg-primary text-white px-6 py-2 rounded-full text-sm font-bold shadow-md hover:bg-blue-700 active:scale-95 transition flex items-center gap-2 mx-auto">
+                        <i class="ph-bold ph-download-simple"></i> Download Resource Guide
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer / Contact Section -->
+    <footer class="bg-secondary text-white mt-auto rounded-t-3xl shadow-[0_-5px_15px_rgba(0,0,0,0.1)]">
+        <div class="max-w-4xl mx-auto px-6 py-10">
+            
+            <div class="mb-8 text-center">
+                <h3 class="text-2xl font-bold text-white mb-2">We want to hear from you</h3>
+                <p class="text-gray-300 text-sm">Share your thoughts, stories, or ask for help.</p>
+            </div>
+
+            <form id="contactForm" class="space-y-4 max-w-lg mx-auto">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1 ml-1">Name (Optional)</label>
+                        <input type="text" name="Name" class="w-full bg-gray-600/50 border border-gray-500 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition" placeholder="John Doe">
+                    </div>
+                    <div>
+                         <label class="block text-xs font-semibold text-gray-300 mb-1 ml-1">Mobile (Optional)</label>
+                        <input type="tel" name="Mobile" class="w-full bg-gray-600/50 border border-gray-500 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition" placeholder="0917...">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1 ml-1">Email (Optional)</label>
+                    <input type="email" name="Email" class="w-full bg-gray-600/50 border border-gray-500 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition" placeholder="you@example.com">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1 ml-1">Message <span class="text-accent">*</span></label>
+                    <textarea name="Message" required rows="4" class="w-full bg-gray-600/50 border border-gray-500 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition" placeholder="How can we move beyond awareness?"></textarea>
+                </div>
+
+                <div id="form-status" class="hidden text-center text-sm p-2 rounded"></div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-accent text-primary font-bold py-3 rounded-lg shadow-lg hover:bg-yellow-400 active:scale-[0.99] transition flex justify-center items-center gap-2">
+                    <span>Send Message</span>
+                    <i class="ph-bold ph-paper-plane-right"></i>
+                </button>
+            </form>
+
+            <div class="mt-10 pt-6 border-t border-gray-600 text-center text-xs text-gray-400">
+                &copy; 2025 Beyond Aware. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        // Store current topic for PDF generation
+        let currentTopic = null;
+
+        // --- Data Configuration ---
+        const topicsData = [
+            {
+                id: 1,
+                title: "Beyond The Risk",
+                originalTopic: "HIV & Sexual Health",
+                icon: "ph-virus",
+                color: "text-pink-600",
+                desc: `<p>Sexual health is often treated with a "fingers crossed" strategy—a hope that silence equals safety. Moving <strong>Beyond The Risk</strong> requires stripping away the romantic illusions that cloud our judgment and taking a hard, unflinching look at the biological stakes.</p>
+                       <p class="mt-2">We are transitioning from passive hope to active, aggressive prevention. In this space, knowledge is not enough; only rigorous, consistent behavioral barriers stand between a fleeting moment of pleasure and a permanent health reality. It is about respecting your body enough to protect it without apology.</p>`,
+                subtopics: [
+                    "Safe Sex Negotiation: Explicit verbal agreement before contact.",
+                    "Regular Testing Routine: Quarterly checks regardless of symptoms.",
+                    "Barrier Method Commitment: Non-negotiable condom/dental dam use.",
+                    "Partner History Discussions: Asking the hard questions first.",
+                    "Post-Exposure Knowledge: Knowing exactly where to get PEP within 72h."
+                ],
+                focus: "Prevention & Zero Regret",
+                issues: `<strong>The biological reality is indifferent to your trust.</strong> Pathogens do not care about "good vibes" or how long you've known someone. They thrive in the invisible gaps of your assumption. <br><br>
+                         The most terrifying aspect isn't the diagnosis itself, but the <em>silent incubation</em>—where your body is being eroded from the inside while you feel perfectly healthy. A single lapse in judgment, a moment of "just this once," can chemically bind you to a daily medical regimen for the rest of your life. It can turn intimacy into a source of permanent, haunting anxiety.`,
+                resolution: `We move beyond luck by implementing non-negotiable protocols:
+                             <br><br>
+                             1. <strong>The Pre-Intimacy Audit:</strong> Explicitly discussing status and testing windows before any clothes come off. "I am clean" is not a medical result; a lab report is.<br>
+                             2. <strong>Barrier Discipline:</strong> Refusing to compromise on protection regardless of the heat of the moment. If they respect you, they respect the barrier.<br>
+                             3. <strong>Clinical Adherence:</strong> If diagnosed, sticking to U=U (Undetectable = Untransmittable) not just as treatment, but as a moral obligation to partners.`
+            },
+            {
+                id: 2,
+                title: "Beyond Bystanding",
+                originalTopic: "Bullying & Harassment",
+                icon: "ph-users-three",
+                color: "text-blue-500",
+                desc: "Moving beyond bystanding means shifting from being a passive witness to an active guardian of social safety.",
+                subtopics: [
+                    "Active Prevention",
+                    "Empathy Education",
+                    "Reporting Channels",
+                    "Adult Role Modeling",
+                    "Digital Civility"
+                ],
+                focus: "Active Prevention & Communication",
+                issues: "Silence in victims, fear of reporting, adults failing to model kindness, kids lacking empathy.",
+                resolution: "Open Communication: Teaching kids to speak up and adults to listen. Creating a culture where kindness is modeled by leaders and parents alike."
+            },
+            {
+                id: 3,
+                title: "Beyond The Hype",
+                originalTopic: "AI Hype",
+                icon: "ph-robot",
+                color: "text-indigo-600",
+                desc: "Moving beyond the hype involves demystifying artificial intelligence to use it as a tool for empowerment rather than a replacement for human thought.",
+                subtopics: [
+                    "Tool Acceptance",
+                    "Managed Usage",
+                    "Ethical Prompting",
+                    "Human Verification",
+                    "Data Privacy"
+                ],
+                focus: "Responsible Management & Acceptance",
+                issues: "Fear-mongering, unchecked usage without oversight, misuse for unethical tasks, over-reliance.",
+                resolution: "Managed Adoption: Accepting AI's power while establishing strict boundaries. Using it as a tool to enhance human effort, not replace critical thought."
+            },
+            {
+                id: 4,
+                title: "Beyond The Self",
+                originalTopic: "Social Responsibility",
+                icon: "ph-globe-stand",
+                color: "text-green-600",
+                desc: "Moving beyond the self requires understanding that our individual actions ripple outwards, affecting the collective well-being of our community.",
+                subtopics: [
+                    "Conscious Impact",
+                    "Community Consideration",
+                    "Respect for Rules",
+                    "Shared Resource Care",
+                    "Ripple Effect Awareness"
+                ],
+                focus: "Conscious Impact & Awareness",
+                issues: "Self-centered behavior, ignorance of how personal actions affect others, 'not my problem' attitude.",
+                resolution: "Collective Awareness: Pausing to consider the impact of our actions on the wider community. Avoiding negligence that burdens others."
+            },
+            {
+                id: 5,
+                title: "Beyond The Screen",
+                originalTopic: "Online Accountability",
+                icon: "ph-wifi-high",
+                color: "text-cyan-600",
+                desc: "Moving beyond the screen challenges us to act with the same integrity in digital spaces as we do in the physical world.",
+                subtopics: [
+                    "Digital Integrity",
+                    "Source Verification",
+                    "Anti-Trolling",
+                    "Cyber-Empathy",
+                    "Footprint Management"
+                ],
+                focus: "Digital Integrity & Safety",
+                issues: "Trolling due to anonymity, spreading misinformation, lack of empathy online, reckless digital footprints.",
+                resolution: "Digital Citizenship: Acting online with the same integrity as offline. Verifying before sharing and treating avatars as real people."
+            },
+            {
+                id: 6,
+                title: "Beyond The Memo",
+                originalTopic: "Workplace Communication",
+                icon: "ph-briefcase",
+                color: "text-slate-600",
+                desc: "Moving beyond the memo means fostering genuine alignment and understanding, rather than just exchanging information.",
+                subtopics: [
+                    "Alignment Checks",
+                    "Style Adaptation",
+                    "Active Listening",
+                    "Tone Clarity",
+                    "Feedback Loops"
+                ],
+                focus: "Alignment & Understanding",
+                issues: "Misinterpretation of tone, passive-aggressiveness, assumption of understanding, clashing styles.",
+                resolution: "Active Alignment: Adapting communication styles to ensure clarity. confirming understanding to avoid costly misunderstandings."
+            },
+            {
+                id: 7,
+                title: "Beyond Provision",
+                originalTopic: "Parenting the Next Gen",
+                icon: "ph-baby",
+                color: "text-orange-500",
+                desc: "Moving beyond provision is about raising children who are rich in character and attitude, not just material resources.",
+                subtopics: [
+                    "Attitude Building",
+                    "Character Development",
+                    "Resilience Coaching",
+                    "Value Transmission",
+                    "Progressive Mindset"
+                ],
+                focus: "Generational Progress & Attitude",
+                issues: "Regressive attitudes, entitlement, focusing only on skills/academics while neglecting character.",
+                resolution: "Intentional Parenting: Raising children who progress in attitude and character. Ensuring the next generation is better, not just wealthier."
+            },
+            {
+                id: 8,
+                title: "Beyond Convenience",
+                originalTopic: "Social Ethics in Public",
+                icon: "ph-users",
+                color: "text-teal-600",
+                desc: "Moving beyond convenience means sacrificing personal ease for the comfort and order of the shared public space.",
+                subtopics: [
+                    "Spatial Awareness",
+                    "Noise Discipline",
+                    "Queue Etiquette",
+                    "Cleanliness",
+                    "Right-of-Way Respect"
+                ],
+                focus: "Sensitivity & Spatial Awareness",
+                issues: "Loudness in shared spaces, blocking paths, littering, treating public space as private territory.",
+                resolution: "Spatial Respect: Being hyper-aware of one's surroundings. Understanding that public spaces are shared, not owned."
+            },
+            {
+                id: 9,
+                title: "Beyond Morality",
+                originalTopic: "Spiritual Salvation",
+                icon: "ph-cross",
+                color: "text-purple-600",
+                desc: "Moving beyond morality recognizes that good works are not a substitute for a saving relationship with the Divine.",
+                subtopics: [
+                    "Faith vs Works",
+                    "Relationship over Religion",
+                    "Biblical Truth",
+                    "Surrender to Christ",
+                    "Grace Understanding"
+                ],
+                focus: "Salvation through Jesus Christ",
+                issues: "Believing 'being good' is enough, spiritual pride, reliance on rituals, emptiness despite morality.",
+                resolution: "Faith Alone: Acknowledging that morality cannot save. True salvation comes only through a personal relationship with Jesus Christ."
+            }
+        ];
+
+        // --- View Logic ---
+        const homeView = document.getElementById('home-view');
+        const detailView = document.getElementById('detail-view');
+        const cardsContainer = document.getElementById('cards-container');
+
+        // Render Cards
+        function renderCards() {
+            cardsContainer.innerHTML = topicsData.map(topic => `
+                <div onclick="openTopic(${topic.id})" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 card-hover cursor-pointer flex flex-col items-center text-center h-full">
+                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-2xl ${topic.color}">
+                        <i class="ph-fill ${topic.icon}"></i>
+                    </div>
+                    <h3 class="font-bold text-primary text-xl mb-1">${topic.title}</h3>
+                    <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-3">${topic.originalTopic}</p>
+                    
+                    <div class="mt-auto pt-4 text-accent text-sm font-bold flex items-center gap-2 group">
+                        Go Beyond <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open Topic Detail
+        window.openTopic = (id) => {
+            currentTopic = topicsData.find(t => t.id === id);
+            if (!currentTopic) return;
+
+            // Populate Data (using innerHTML for formatted content)
+            document.getElementById('detail-title').innerText = currentTopic.title;
+            document.getElementById('detail-hero-title').innerText = currentTopic.title;
+            
+            // Handle Description (Check if it's HTML or plain text logic from previous version)
+            // Note: We updated the data structure to include a 'desc' field.
+            if(currentTopic.desc) {
+                document.getElementById('detail-desc').innerHTML = currentTopic.desc;
+            } else {
+                 document.getElementById('detail-desc').innerText = `Moving ${currentTopic.title.toLowerCase()} requires a shift from passive knowledge to active behavioral change in the realm of ${currentTopic.originalTopic}.`;
+            }
+
+            document.getElementById('detail-behavior').innerText = currentTopic.focus;
+            document.getElementById('detail-issues').innerHTML = currentTopic.issues; // innerHTML for bolding
+            document.getElementById('detail-resolution').innerHTML = currentTopic.resolution; // innerHTML for formatting
+
+            // Populate Subtopics List
+            const subList = document.getElementById('detail-subtopics');
+            subList.innerHTML = currentTopic.subtopics.map(sub => `
+                <li class="flex items-start gap-3 p-3 rounded hover:bg-gray-50 transition">
+                    <i class="ph-bold ph-check-circle text-accent mt-0.5 min-w-[16px]"></i>
+                    <span class="text-secondary text-sm font-medium leading-tight">${sub}</span>
+                </li>
+            `).join('');
+
+            // Switch View
+            homeView.style.display = 'none';
+            detailView.classList.remove('hidden');
+            detailView.style.display = 'block';
+            window.scrollTo(0,0);
+        };
+
+        // Show Home
+        window.showHome = () => {
+            detailView.style.display = 'none';
+            homeView.style.display = 'block';
+            document.getElementById('topics-grid').scrollIntoView({behavior: 'smooth'});
+            currentTopic = null;
+        }
+
+        // PDF Generation
+        window.downloadPDF = async () => {
+            if (!currentTopic) return;
+            
+            const btn = document.getElementById('download-btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<div class="loader w-4 h-4 border-white border-t-transparent"></div> Generatiing...';
+            btn.disabled = true;
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Colors
+                const primaryColor = [0, 64, 128]; // #004080
+                const secondaryColor = [71, 71, 71]; // #474747
+
+                // Header
+                doc.setFillColor(...primaryColor);
+                doc.rect(0, 0, 210, 40, 'F');
+                
+                doc.setTextColor(255, 255, 255);
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(22);
+                doc.text("BEYOND AWARE", 105, 20, null, null, "center");
+                
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "normal");
+                doc.text("RESOURCE GUIDE", 105, 28, null, null, "center");
+
+                let y = 55;
+
+                // Title
+                doc.setTextColor(...primaryColor);
+                doc.setFontSize(18);
+                doc.setFont("helvetica", "bold");
+                doc.text(currentTopic.title, 20, y);
+                
+                y += 8;
+                doc.setTextColor(...secondaryColor);
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "bold");
+                doc.text(`ORIGINAL TOPIC: ${currentTopic.originalTopic.toUpperCase()}`, 20, y);
+
+                y += 15;
+
+                // Focus Area
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, y-5, 170, 16, 'F');
+                doc.setTextColor(...primaryColor);
+                doc.setFontSize(11);
+                doc.text(`Behavioral Focus: ${currentTopic.focus}`, 25, y+5);
+                
+                y += 25;
+
+                // Helper for text wrapping
+                const splitText = (text, size) => doc.splitTextToSize(text.replace(/<[^>]*>?/gm, ''), 170);
+
+                // Subtopics
+                doc.setFontSize(12);
+                doc.setFont("helvetica", "bold");
+                doc.setTextColor(0, 0, 0);
+                doc.text("5 Key Areas", 20, y);
+                y += 8;
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "normal");
+                doc.setTextColor(...secondaryColor);
+                
+                currentTopic.subtopics.forEach(sub => {
+                    doc.text(`• ${sub}`, 25, y);
+                    y += 6;
+                });
+
+                y += 10;
+
+                // Issues
+                doc.setFontSize(12);
+                doc.setFont("helvetica", "bold");
+                doc.setTextColor(180, 0, 0); // Dark Red
+                doc.text("Issues & Concerns", 20, y);
+                y += 8;
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "normal");
+                doc.setTextColor(...secondaryColor);
+                const issueLines = splitText(currentTopic.issues);
+                doc.text(issueLines, 20, y);
+                y += (issueLines.length * 5) + 10;
+
+                // Resolution
+                doc.setFontSize(12);
+                doc.setFont("helvetica", "bold");
+                doc.setTextColor(...primaryColor);
+                doc.text("Moving Beyond (Resolution)", 20, y);
+                y += 8;
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "normal");
+                doc.setTextColor(...secondaryColor);
+                const resLines = splitText(currentTopic.resolution);
+                doc.text(resLines, 20, y);
+
+                // Footer
+                doc.setFontSize(8);
+                doc.setTextColor(150, 150, 150);
+                doc.text("© 2025 Beyond Aware Initiative", 105, 280, null, null, "center");
+
+                doc.save(`Beyond_Aware_${currentTopic.title.replace(/\s+/g, '_')}.pdf`);
+                
+            } catch (e) {
+                console.error(e);
+                alert("Could not generate PDF. Please try again.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+
+        // Initialize
+        renderCards();
+
+        // --- Form Handling ---
+        const form = document.getElementById('contactForm');
+        const statusDiv = document.getElementById('form-status');
+        const submitBtn = document.getElementById('submitBtn');
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwqerSGLjAxYYKVPO8sXEV59zvqOomFFkEFPk-QmIhkF3Ac3y5Vv2YF6PBGXe2-0Kn72A/exec';
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            // Loading State
+            submitBtn.disabled = true;
+            const originalBtnContent = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<div class="loader"></div>';
+
+            const formData = new FormData(form);
+            // Append device timestamp
+            formData.append('ClientTime', new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }));
+            
+            const params = new URLSearchParams();
+            for (const pair of formData) {
+                params.append(pair[0], pair[1]);
+            }
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: params,
+                mode: 'no-cors' 
+            })
+            .then(response => {
+                showStatus('Message sent successfully!', 'success');
+                form.reset();
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                showStatus('Something went wrong. Please try again.', 'error');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnContent;
+            });
+        });
+
+        function showStatus(msg, type) {
+            statusDiv.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+            statusDiv.innerText = msg;
+            
+            if (type === 'success') {
+                statusDiv.classList.add('bg-green-100', 'text-green-700');
+            } else {
+                statusDiv.classList.add('bg-red-100', 'text-red-700');
+            }
+            statusDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                statusDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+    </script>
+</body>
+</html>
