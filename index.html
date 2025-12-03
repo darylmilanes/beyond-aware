@@ -8,8 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- jsPDF for PDF generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
@@ -105,7 +103,8 @@
                 <div class="max-w-xl mx-auto relative">
                     <div class="absolute -left-4 -top-4 text-accent/20 text-6xl font-serif">“</div>
                     <p class="text-secondary text-lg leading-relaxed italic z-10 relative">
-                        True change doesn't happen when we just know better. It happens when we do better. <br>
+                        True change doesn't happen when we just know better.<br>
+                        It happens when we do better.<br>
                         <span class="font-bold text-primary not-italic mt-2 block">Know. Understand. Transform.</span>
                     </p>
                     <div class="absolute -right-4 -bottom-4 text-accent/20 text-6xl font-serif">”</div>
@@ -181,20 +180,14 @@
                         <h3 class="font-bold text-primary mb-3 flex items-center gap-2">
                             <i class="ph-fill ph-rocket-launch text-primary"></i> Moving Beyond
                         </h3>
-                        <div class="bg-white/60 p-3 rounded-lg">
-                            <p id="detail-resolution" class="font-medium text-secondary text-sm">
-                                <!-- Injected -->
-                            </p>
+                        <div id="detail-resolution" class="font-medium text-secondary text-sm">
+                            <!-- Injected -->
                         </div>
                     </div>
 
                 </div>
                 
-                <div class="mt-10 text-center">
-                    <button id="download-btn" onclick="downloadPDF()" class="bg-primary text-white px-6 py-2 rounded-full text-sm font-bold shadow-md hover:bg-blue-700 active:scale-95 transition flex items-center gap-2 mx-auto">
-                        <i class="ph-bold ph-download-simple"></i> Download Resource Guide
-                    </button>
-                </div>
+                <!-- Removed Download Button as requested -->
             </div>
         </div>
 
@@ -248,9 +241,6 @@
 
     <!-- Logic -->
     <script>
-        // Store current topic for PDF generation
-        let currentTopic = null;
-
         // --- Data Configuration ---
         const topicsData = [
             {
@@ -275,7 +265,18 @@
                              <br><br>
                              1. <strong>The Pre-Intimacy Audit:</strong> Explicitly discussing status and testing windows before any clothes come off. "I am clean" is not a medical result; a lab report is.<br>
                              2. <strong>Barrier Discipline:</strong> Refusing to compromise on protection regardless of the heat of the moment. If they respect you, they respect the barrier.<br>
-                             3. <strong>Clinical Adherence:</strong> If diagnosed, sticking to U=U (Undetectable = Untransmittable) not just as treatment, but as a moral obligation to partners.`
+                             3. <strong>Clinical Adherence:</strong> If diagnosed, sticking to U=U (Undetectable = Untransmittable) not just as treatment, but as a moral obligation to partners.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Silent Assumption</h4>
+                                <p class="text-sm italic mb-4 text-secondary">Mark and Sarah had been dating for three months. They felt a deep emotional connection. One night, in the heat of the moment, Mark whispered, "I trust you," and they skipped protection. They didn't test. They didn't talk. They just felt "safe." Six months later, a routine checkup revealed a reality that "trust" couldn't prevent.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Am I confusing "feeling safe" with "being safe"?</li>
+                                    <li>Why do I treat asking for a test result as an insult to trust rather than an act of care?</li>
+                                    <li>If I found out today I was positive, which silence would I regret the most?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 2,
@@ -283,17 +284,34 @@
                 originalTopic: "Bullying & Harassment",
                 icon: "ph-users-three",
                 color: "text-blue-500",
-                desc: "Moving beyond bystanding means shifting from being a passive witness to an active guardian of social safety.",
+                desc: `<p>Bullying thrives in a vacuum of silence. Moving <strong>Beyond Bystanding</strong> means recognizing that neutrality in the face of aggression is a myth. When you see harm and say nothing, you are not "staying out of it"—you are the audience the bully is performing for.</p>
+                       <p class="mt-2">True guardianship requires breaking the script. It shifts the burden from the victim, who is often powerless, to the observer, who holds the collective power to de-escalate. It demands the courage to be the one voice that turns the tide.</p>`,
                 subtopics: [
-                    "Active Prevention",
-                    "Empathy Education",
-                    "Reporting Channels",
-                    "Adult Role Modeling",
-                    "Digital Civility"
+                    "Active Prevention: Identifying isolation before it becomes a target.",
+                    "Empathy Education: Understanding the neurological impact of exclusion.",
+                    "Reporting Channels: Distinguishing 'snitching' from 'guardianship'.",
+                    "Adult Role Modeling: Eliminating hypocrisy in how authority figures speak.",
+                    "Digital Civility: Treating online comments as permanent records."
                 ],
                 focus: "Active Prevention & Communication",
-                issues: "Silence in victims, fear of reporting, adults failing to model kindness, kids lacking empathy.",
-                resolution: "Open Communication: Teaching kids to speak up and adults to listen. Creating a culture where kindness is modeled by leaders and parents alike."
+                issues: `<strong>Your silence is the weapon the aggressor uses.</strong> The most haunting damage often isn't the bruise from a physical blow, but the psychological erosion caused by the twenty people who watched and did nothing. <br><br>
+                         For the victim, the silence of peers confirms they are unworthy of protection, a belief that can lead to lifelong self-loathing. For the bystander, the memory of cowardice—of knowing something was wrong and freezing—becomes a slow-acting poison that corrodes self-respect. In that moment of inaction, you are not neutral; you are complicit.`,
+                resolution: `We dismantle the stage for cruelty through specific actions:
+                             <br><br>
+                             1. <strong>The Distraction Interrupt:</strong> You don't need to fight; you just need to break the momentum. Drop a book, ask a random question, or invite the victim to walk with you.<br>
+                             2. <strong>The 'After' Check-In:</strong> If fear froze you in the moment, you must act immediately after. Privately validating the victim destroys the isolation the bully tried to create.<br>
+                             3. <strong>The Documentation Habit:</strong> In adult or workplace settings, keep a factual log of incidents. Harassment relies on "he said, she said"; documentation relies on patterns.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Group Chat</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A humiliating photo of a coworker was sent to the office group chat. 15 people saw it. 3 added 'laugh' reactions. 12 people said nothing. Later, everyone told the victim, "I didn't think it was funny." But to the victim, looking at the screen, the silence of the 12 looked exactly like the laughter of the 3.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>When was the last time I saw something wrong and waited for someone else to speak first?</li>
+                                    <li>Does my silence look like approval to the victim?</li>
+                                    <li>What am I protecting more: my social comfort or their human dignity?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 3,
@@ -301,17 +319,34 @@
                 originalTopic: "AI Hype",
                 icon: "ph-robot",
                 color: "text-indigo-600",
-                desc: "Moving beyond the hype involves demystifying artificial intelligence to use it as a tool for empowerment rather than a replacement for human thought.",
+                desc: `<p>Artificial Intelligence is neither a god nor a monster; it is a prediction engine. Moving <strong>Beyond The Hype</strong> requires stopping the oscillation between panic and blind worship. It demands that we become active <em>editors</em>, not passive <em>consumers</em>.</p>
+                       <p class="mt-2">The danger lies not in the tool, but in the surrender of agency. Using AI effectively means treating it as a junior intern: capable and fast, but prone to confident hallucinations and completely lacking in moral context. You must remain the expert in the room.</p>`,
                 subtopics: [
-                    "Tool Acceptance",
-                    "Managed Usage",
-                    "Ethical Prompting",
-                    "Human Verification",
-                    "Data Privacy"
+                    "Tool Acceptance: Viewing AI as a co-pilot, never the pilot.",
+                    "Managed Usage: Setting strict boundaries on when to use it vs. human effort.",
+                    "Ethical Prompting: Avoiding bias, plagiarism, and lazy shortcuts.",
+                    "Human Verification: Fact-checking every single claim (hallucination defense).",
+                    "Data Privacy: Treating the prompt box like a public billboard."
                 ],
-                focus: "Responsible Management & Acceptance",
-                issues: "Fear-mongering, unchecked usage without oversight, misuse for unethical tasks, over-reliance.",
-                resolution: "Managed Adoption: Accepting AI's power while establishing strict boundaries. Using it as a tool to enhance human effort, not replace critical thought."
+                focus: "Responsible Management & Critical Oversight",
+                issues: `<strong>The slow erosion of your own competence.</strong> The more you outsource your thinking, the weaker your critical faculties become. There is a terrifying comfort in letting a machine draft your thoughts, but an algorithm does not care about truth—it cares about probability. <br><br>
+                         When you present AI-generated hallucinations as fact, you are not just making a mistake; you are dismantling your own credibility. Once you are known as someone who doesn't verify, you are finished. The risk isn't that AI will outsmart you, but that you will voluntarily stop thinking.`,
+                resolution: `We master the tool by enforcing human seniority:
+                             <br><br>
+                             1. <strong>The Human Layer:</strong> AI generates the draft; <em>you</em> generate the insight. Never publish raw AI output. If you can't improve it, don't use it.<br>
+                             2. <strong>The Verification Vow:</strong> Treat every AI assertion as a rumor until verified. If you cannot find the primary source, delete it.<br>
+                             3. <strong>The Privacy Firewall:</strong> Never feed the machine what you wouldn't shout in a crowded room. Your private data pays for the service.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Non-Existent Fact</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A young professional wanted to impress his boss with a research report. He used AI to find supporting statistics. The AI provided a perfect data point from a "2023 Study." He put it in his slide deck. During the presentation, the client asked for the source. He couldn't find it because it didn't exist. The AI had hallucinated a believable lie. In seconds, his hard work was overshadowed by his lack of integrity.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Am I using AI to enhance my work or to escape the effort of thinking?</li>
+                                    <li>If the AI is wrong, do I know the subject matter well enough to catch it?</li>
+                                    <li>What part of my humanity am I outsourcing to a machine today?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 4,
@@ -319,17 +354,34 @@
                 originalTopic: "Social Responsibility",
                 icon: "ph-globe-stand",
                 color: "text-green-600",
-                desc: "Moving beyond the self requires understanding that our individual actions ripple outwards, affecting the collective well-being of our community.",
+                desc: `<p>Social responsibility is often reduced to occasional charity, but its true test lies in the mundane, invisible decisions we make when no one is watching. Moving <strong>Beyond The Self</strong> requires dismantling "Main Character Syndrome"—the belief that our convenience overrides the collective order.</p>
+                       <p class="mt-2">It is the shift from "I can do what I want" to "I must do what helps." It recognizes that society functions only when individuals voluntarily limit their own freedom to prevent burdening others. Your personal rights end exactly where your neighbor's discomfort begins.</p>`,
                 subtopics: [
-                    "Conscious Impact",
-                    "Community Consideration",
-                    "Respect for Rules",
-                    "Shared Resource Care",
-                    "Ripple Effect Awareness"
+                    "Conscious Impact: Pausing to calculate the ripple effect of your actions.",
+                    "Community Consideration: Treating public spaces as shared living rooms.",
+                    "Respect for Rules: Following protocols even when they are inconvenient.",
+                    "Shared Resource Care: Preserving public assets for the next user.",
+                    "Ripple Effect Awareness: Understanding that small negligences compound into chaos."
                 ],
-                focus: "Conscious Impact & Awareness",
-                issues: "Self-centered behavior, ignorance of how personal actions affect others, 'not my problem' attitude.",
-                resolution: "Collective Awareness: Pausing to consider the impact of our actions on the wider community. Avoiding negligence that burdens others."
+                focus: "Conscious Impact & Collective Awareness",
+                issues: `<strong>The toxic arrogance of "It's not my problem."</strong> When we prioritize our immediate convenience over communal order, we are not just being annoying; we are acting as parasites on the social contract. <br><br>
+                         Leaving a tray on the table, blocking a driveway "for just a minute," or playing loud music in public are not small quirks; they are declarations that you believe your time and comfort are more valuable than everyone else's combined. This erosion of courtesy creates a low-trust society where everyone is defensive, angry, and isolated.`,
+                resolution: `We build a livable society through voluntary restraint:
+                             <br><br>
+                             1. <strong>The "Leave No Trace" Ethic:</strong> Whether it's a digital comment section or a physical food court, leave the space cleaner and calmer than you found it.<br>
+                             2. <strong>The Convenience Audit:</strong> Before acting, ask: "If everyone did this, would the system collapse?" If the answer is yes, don't do it.<br>
+                             3. <strong>The Burden Check:</strong> Actively look for ways you might be invisible work for others (e.g., janitors, servers, neighbors) and eliminate it.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The "Quick" Stop</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A driver put his hazards on and blocked a narrow lane to run into a store. "I'll just be a minute," he told himself. Behind him, a delivery truck got stuck, blocking the intersection. A gridlock formed. Three blocks away, an ambulance was forced to reroute, losing four critical minutes. The driver got his coffee and left, never knowing that his "one minute" of convenience cost a stranger their chance at survival.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Do I act like the protagonist in a world of background characters?</li>
+                                    <li>Is my "small" inconvenience actually a significant burden to someone else?</li>
+                                    <li>Am I confusing "freedom" with "lack of discipline"?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 5,
@@ -337,17 +389,34 @@
                 originalTopic: "Online Accountability",
                 icon: "ph-wifi-high",
                 color: "text-cyan-600",
-                desc: "Moving beyond the screen challenges us to act with the same integrity in digital spaces as we do in the physical world.",
+                desc: `<p>The screen provides a seductive illusion: that we are invisible, and that the people we interact with are just text on glass. Moving <strong>Beyond The Screen</strong> means piercing this veil of anonymity and recognizing that digital actions have physical, permanent consequences.</p>
+                       <p class="mt-2">Integrity is who you are when no one is watching—but online, the whole world is potentially watching, forever. True accountability means curating a digital footprint that aligns with your real-world values, treating every pixelated avatar as a human being with a pulse.</p>`,
                 subtopics: [
-                    "Digital Integrity",
-                    "Source Verification",
-                    "Anti-Trolling",
-                    "Cyber-Empathy",
-                    "Footprint Management"
+                    "Digital Integrity: Acting online exactly as you would in person.",
+                    "Source Verification: Refusing to share unverified headlines.",
+                    "Anti-Trolling: Engaging to understand, not to humiliate.",
+                    "Cyber-Empathy: Remembering the human behind the handle.",
+                    "Footprint Management: Auditing your history for alignment with current values."
                 ],
                 focus: "Digital Integrity & Safety",
-                issues: "Trolling due to anonymity, spreading misinformation, lack of empathy online, reckless digital footprints.",
-                resolution: "Digital Citizenship: Acting online with the same integrity as offline. Verifying before sharing and treating avatars as real people."
+                issues: `<strong>The Online Disinhibition Effect.</strong> We type things we would never dare say to someone's face. The screen acts as an emotional shield, stripping away the non-verbal cues (tears, flinching, tone) that usually trigger our empathy. <br><br>
+                         This detachment turns cruelty into a game and misinformation into a reflex. We forget that the internet is not written in pencil; it is written in ink. A moment of anger, a reckless joke, or a shared lie can destroy a reputation—yours or someone else's—years after the 'send' button was pressed.`,
+                resolution: `We bridge the gap between avatar and self through intentional habits:
+                             <br><br>
+                             1. <strong>The Billboard Test:</strong> Before posting, ask: "Would I be comfortable with this text displayed on a billboard outside my home with my photo next to it?"<br>
+                             2. <strong>The Friction Pause:</strong> When triggered, force a delay. Never reply while your heart rate is elevated. Draft it, sleep on it, then delete it.<br>
+                             3. <strong>The Humanize First Rule:</strong> Before attacking an opinion, acknowledge the person. "I see your point, but..." is vastly different from "You are an idiot."
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Resurfaced Post</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A talented applicant was the top candidate for a dream job. During the final background check, the HR team found a series of aggressive, mocking comments he had made on a public forum three years prior. He argued, "That was just the internet, it wasn't real." The company replied, "How you treat strangers when you think you're anonymous tells us exactly who you are." He didn't get the job.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Does my online persona have the same moral compass as my offline self?</li>
+                                    <li>If my entire comment history was read aloud at my funeral, would I be proud?</li>
+                                    <li>Am I using the internet to connect, or to vent my own unhappiness on strangers?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 6,
@@ -355,17 +424,34 @@
                 originalTopic: "Workplace Communication",
                 icon: "ph-briefcase",
                 color: "text-slate-600",
-                desc: "Moving beyond the memo means fostering genuine alignment and understanding, rather than just exchanging information.",
+                desc: `<p>In the modern workplace, communication is not about sending information; it’s about ensuring alignment. Moving <strong>Beyond The Memo</strong> means recognizing that every verbal instruction, email, or Slack message is a potential point of failure if understanding is assumed, not confirmed.</p>
+                       <p class="mt-2">Alignment is the key performance indicator of successful communication. It demands awareness of different communication styles, proper selection of channels, and the humility to constantly check if the message received matches the message intended. Miscommunication is a shared liability, but preventing it is an individual responsibility.</p>`,
                 subtopics: [
-                    "Alignment Checks",
-                    "Style Adaptation",
-                    "Active Listening",
-                    "Tone Clarity",
-                    "Feedback Loops"
+                    "Alignment Checks: Closing the loop with 'So, to confirm, I will...' statements.",
+                    "Style Adaptation: Recognizing if a colleague needs high-level or detailed instructions.",
+                    "Active Listening: Focusing on intent, not just content, in meetings.",
+                    "Tone Clarity: Choosing the right channel (email vs. phone call) for sensitive topics.",
+                    "Feedback Loops: Establishing safe and structured ways to challenge ambiguity."
                 ],
                 focus: "Alignment & Understanding",
-                issues: "Misinterpretation of tone, passive-aggressiveness, assumption of understanding, clashing styles.",
-                resolution: "Active Alignment: Adapting communication styles to ensure clarity. confirming understanding to avoid costly misunderstandings."
+                issues: `<strong>The high cost of quiet assumptions.</strong> The most severe workplace problems—project delays, budget overruns, and internal resentment—rarely start with malice. They begin with someone saying "yes" when they meant "I think so," or assuming an email’s tone when a simple phone call would have provided clarity. <br><br>
+                         This silence creates a crippling psychological debt. You spend time fixing someone else's misinterpretation, which breeds resentment, erodes trust, and ultimately stunts your career growth because you are perceived as constantly putting out fires caused by poor initial transfer of information.`,
+                resolution: `We enforce clarity by building redundancy into the process:
+                             <br><br>
+                             1. <strong>The Three-Level Check:</strong> After a verbal instruction, ask: (1) What is the goal? (2) What is the deadline? (3) What potential roadblocks do you see? This forces genuine thinking.<br>
+                             2. <strong>Channel Discipline:</strong> Use writing for documentation (alignment). Use calls/meetings for nuance (empathy). Use quick chats for status (efficiency). Never use email for conflict resolution.<br>
+                             3. <strong>Confirmation Protocol:</strong> Mandate a simple "closing the loop" confirmation for all critical tasks: "Understood. I'll have the report by Friday at 3 PM, focusing on Q3 results."
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Muted Email</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A manager sent a team-wide email detailing a new client rollout, using slightly ambiguous language about who was responsible for the final testing phase. Everyone on the team assumed someone else was handling it, and no one replied to confirm their specific role. The project launched with a critical bug, costing the company the client. The failure wasn't due to incompetence, but to the collective failure to say, "I am responsible for X, correct?"</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Do I ask clarifying questions, even when I think I should already know the answer?</li>
+                                    <li>Am I quick to blame the sender for ambiguity, or do I take responsibility for confirming the message?</li>
+                                    <li>What is the highest-stakes assumption I am making in my work communication right now?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 7,
@@ -373,17 +459,34 @@
                 originalTopic: "Parenting the Next Gen",
                 icon: "ph-baby",
                 color: "text-orange-500",
-                desc: "Moving beyond provision is about raising children who are rich in character and attitude, not just material resources.",
+                desc: `<p>Parenting today is too often measured by what we provide—the best schools, the latest gadgets, the most expensive experiences. Moving <strong>Beyond Provision</strong> is an urgent call to shift focus from material enrichment to character investment.</p>
+                       <p class="mt-2">Our future generation will inherit unprecedented complexity. They need more than knowledge; they need inner resilience, a strong moral compass, and the progressive mindset to navigate societal differences without regressing into tribalism or entitlement. It is our job to raise citizens of tomorrow, not just occupants of our home.</p>`,
                 subtopics: [
-                    "Attitude Building",
-                    "Character Development",
-                    "Resilience Coaching",
-                    "Value Transmission",
-                    "Progressive Mindset"
+                    "Attitude Building: Prioritizing humility and gratitude over achievement trophies.",
+                    "Character Development: Teaching integrity through consistent parental example.",
+                    "Resilience Coaching: Allowing children to fail and solve problems independently.",
+                    "Value Transmission: Explicitly discussing core family and social values.",
+                    "Progressive Mindset: Fostering curiosity and respect for cultural/social differences."
                 ],
                 focus: "Generational Progress & Attitude",
-                issues: "Regressive attitudes, entitlement, focusing only on skills/academics while neglecting character.",
-                resolution: "Intentional Parenting: Raising children who progress in attitude and character. Ensuring the next generation is better, not just wealthier."
+                issues: `<strong>The curse of entitlement and the atrophy of struggle.</strong> When parents pave every path, the child never develops the muscularity of resilience. They graduate knowing how to win, but not how to cope with loss or ambiguity. <br><br>
+                         This can manifest as debilitating fragility and a regressive attitude towards complex social issues, because they've never had to negotiate or truly earn respect. The ultimate failure is raising a highly competent adult who is deeply unhappy and lacks the inner strength to sustain their own success or contribute meaningfully to society.`,
+                resolution: `We secure the future by emphasizing character development:
+                             <br><br>
+                             1. <strong>The Responsibility Ladder:</strong> Delegate increasing responsibilities (chores, budgeting, planning) that give children a tangible sense of competence and contribution.<br>
+                             2. <strong>Value Vetting:</strong> Before purchasing an expensive item, ask the child: "How will this help you serve others or advance your character?"<br>
+                             3. <strong>The Struggle Standard:</strong> Stop intervening the moment a child struggles. Coaching through discomfort builds emotional immunity that no amount of money can buy.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Empty Trophy Case</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A high school graduate, gifted with every opportunity—tutors, private clubs, top-tier university paid for—suffered a panic attack when he was forced to choose his major. His parents had planned his life meticulously, ensuring success but preventing him from ever encountering an internal challenge. Now, facing his first truly independent decision, he was emotionally paralyzed. All the provision resulted in a crisis of identity and competence.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Am I giving my children what they need for life, or just what I can afford to give them?</li>
+                                    <li>Am I using my money/influence to solve problems my child should be solving themselves?</li>
+                                    <li>What core value do I consistently model to my child that they cannot buy?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 8,
@@ -391,17 +494,34 @@
                 originalTopic: "Social Ethics in Public",
                 icon: "ph-users",
                 color: "text-teal-600",
-                desc: "Moving beyond convenience means sacrificing personal ease for the comfort and order of the shared public space.",
+                desc: `<p>Public spaces—from buses to coffee shops, queues to parks—are governed by an unwritten contract of consideration. Moving <strong>Beyond Convenience</strong> is the proactive effort to manage your sensory footprint (noise, space, odor) so that your presence does not impose on the psychological comfort of others.</p>
+                       <p class="mt-2">Unlike general social responsibility, this is about physical self-discipline. It means recognizing that your right to relax, chat, or listen to music stops exactly at the point where it becomes an inconvenience, distraction, or burden to the stranger next to you.</p>`,
                 subtopics: [
-                    "Spatial Awareness",
-                    "Noise Discipline",
-                    "Queue Etiquette",
-                    "Cleanliness",
-                    "Right-of-Way Respect"
+                    "Spatial Awareness: Being highly conscious of your personal space bubble.",
+                    "Noise Discipline: Using headphones or lowering volume automatically in shared areas.",
+                    "Queue Etiquette: Respecting turn-taking and avoiding line-jumping/gaps.",
+                    "Cleanliness: Immediate removal of personal trash and spills.",
+                    "Right-of-Way Respect: Yielding to others (e.g., on stairs, walkways) without confrontation."
                 ],
                 focus: "Sensitivity & Spatial Awareness",
-                issues: "Loudness in shared spaces, blocking paths, littering, treating public space as private territory.",
-                resolution: "Spatial Respect: Being hyper-aware of one's surroundings. Understanding that public spaces are shared, not owned."
+                issues: `<strong>The high psychological cost of noise pollution and sensory intrusion.</strong> Treating a public space like your private living room (e.g., loud phone calls, sprawling luggage, leaving trash) is an act of subtle aggression. <br><br>
+                         It forces others into unwanted sensory input, causing stress, frustration, and resentment that builds over time. This daily erosion of peace leads to widespread irritability and low-level conflict. The most common consequence is the silent, passive aggressive anger aimed at the person who simply refuses to acknowledge that anyone else exists.`,
+                resolution: `We foster communal harmony through immediate self-correction:
+                             <br><br>
+                             1. <strong>The Decibel Check:</strong> Before hitting play or taking a call, pause and ask: "Can anyone within 10 feet hear this conversation/media?" If yes, adjust or move.<br>
+                             2. <strong>The Cleanliness Contract:</strong> Never leave a place without ensuring the next person who uses it finds it immaculate. Do not rely on staff to clean up your deliberate mess.<br>
+                             3. <strong>The Flow Protocol:</strong> Keep walkways and doorways clear. The group of people standing and chatting in the middle of a doorway is a collective sign of spatial unawareness.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Headphone Leak</h4>
+                                <p class="text-sm italic mb-4 text-secondary">A student was studying for a major exam in a quiet café. A group of four friends sat nearby. While three used headphones, the fourth had his music leaking loudly from his earbuds. The student was too polite to ask him to turn it down, but the constant, muffled bass slowly destroyed her focus. She ultimately packed up, losing an hour of precious study time, all because one person prioritized their minor convenience (not pushing the earbud in fully) over the shared atmosphere.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>When I am in a public space, do I adjust my sensory behavior, or do I make others adjust to me?</li>
+                                    <li>Am I confusing my private freedom with the public right to quiet?</li>
+                                    <li>How often do I cause an inconvenience that I then expect someone else to clean up?</li>
+                                </ul>
+                             </div>`
             },
             {
                 id: 9,
@@ -409,17 +529,34 @@
                 originalTopic: "Spiritual Salvation",
                 icon: "ph-cross",
                 color: "text-purple-600",
-                desc: "Moving beyond morality recognizes that good works are not a substitute for a saving relationship with the Divine.",
+                desc: `<p>All the positive behavioral shifts in the world—from being accountable online to preventing disease—ultimately rest on a foundation of true Spiritual Salvation. Moving <strong>Beyond Morality</strong> is the critical recognition that human goodness, while valuable in society, is insufficient for securing eternal standing.</p>
+                       <p class="mt-2">This is the truth that encompasses all others: salvation is achieved not by effort or discipline, but by grace alone. We shift our focus from what we must do to prove our worth, to what has already been done for us through the finished work of Jesus Christ.</p>`,
                 subtopics: [
-                    "Faith vs Works",
-                    "Relationship over Religion",
-                    "Biblical Truth",
-                    "Surrender to Christ",
-                    "Grace Understanding"
+                    "Faith vs Works: Understanding the order of salvation and sanctification.",
+                    "Relationship over Religion: Prioritizing personal connection with God.",
+                    "Biblical Truth: Using scripture as the ultimate authority for faith and life.",
+                    "Surrender to Christ: The act of acknowledging personal insufficiency.",
+                    "Grace Understanding: Accepting God's unearned favor completely."
                 ],
-                focus: "Salvation through Jesus Christ",
-                issues: "Believing 'being good' is enough, spiritual pride, reliance on rituals, emptiness despite morality.",
-                resolution: "Faith Alone: Acknowledging that morality cannot save. True salvation comes only through a personal relationship with Jesus Christ."
+                focus: "Salvation through Jesus Christ Alone",
+                issues: `<strong>The spiritual trap of the "good" person.</strong> The most dangerous spiritual position is believing that because you are a good spouse, a great citizen, and a moral employee, you have earned God's favor. This is self-righteousness. <br><br>
+                         Morality is a high bar, but it is not high enough. Relying on good works to bridge the gap between human sin and God's perfect holiness results in perpetual spiritual anxiety, pride toward others, and a profound, fundamental misunderstanding of the Gospel. It is an empty, exhausting religion of self-effort that always leads to spiritual burnout.`,
+                resolution: `We secure our foundation through the simple act of faith:
+                             <br><br>
+                             1. <strong>The Surrender Prayer:</strong> Regularly acknowledging Jesus Christ as the only sufficient payment for sin, moving trust from self to Savior.<br>
+                             2. <strong>The Daily Dependence Habit:</strong> Starting and ending the day acknowledging that salvation is maintained by God's grace, not human performance.<br>
+                             3. <strong>Living Out the Fruit:</strong> Good works (all the other 8 topics) become the result of salvation, not the requirement for it.
+                             <br><br>
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                                <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Missing Peace</h4>
+                                <p class="text-sm italic mb-4 text-secondary">David was outwardly successful in all 8 areas: he volunteered, donated, never used harsh words online, and was impeccable in his professional life. Yet, every night, he felt a crushing spiritual emptiness. He believed he was "doing enough," but the bar of his own goodness kept shifting, leaving him constantly exhausted and judgmental of others. He mistook his moral discipline for a saving relationship, leading to profound internal dissatisfaction and spiritual fatigue.</p>
+                                <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-secondary font-medium">
+                                    <li>Am I pursuing morality to earn acceptance, or because I have already received grace?</li>
+                                    <li>If all my good deeds were wiped away today, would my faith still stand firm on Jesus Christ alone?</li>
+                                    <li>Where am I currently relying on my own effort (works) instead of resting in God's finished work (faith)?</li>
+                                </ul>
+                             </div>`
             }
         ];
 
@@ -447,28 +584,26 @@
 
         // Open Topic Detail
         window.openTopic = (id) => {
-            currentTopic = topicsData.find(t => t.id === id);
-            if (!currentTopic) return;
+            const topic = topicsData.find(t => t.id === id);
+            if (!topic) return;
 
             // Populate Data (using innerHTML for formatted content)
-            document.getElementById('detail-title').innerText = currentTopic.title;
-            document.getElementById('detail-hero-title').innerText = currentTopic.title;
+            document.getElementById('detail-title').innerText = topic.title;
+            document.getElementById('detail-hero-title').innerText = topic.title;
             
-            // Handle Description (Check if it's HTML or plain text logic from previous version)
-            // Note: We updated the data structure to include a 'desc' field.
-            if(currentTopic.desc) {
-                document.getElementById('detail-desc').innerHTML = currentTopic.desc;
+            if(topic.desc) {
+                document.getElementById('detail-desc').innerHTML = topic.desc;
             } else {
-                 document.getElementById('detail-desc').innerText = `Moving ${currentTopic.title.toLowerCase()} requires a shift from passive knowledge to active behavioral change in the realm of ${currentTopic.originalTopic}.`;
+                 document.getElementById('detail-desc').innerText = `Moving ${topic.title.toLowerCase()} requires a shift from passive knowledge to active behavioral change in the realm of ${topic.originalTopic}.`;
             }
 
-            document.getElementById('detail-behavior').innerText = currentTopic.focus;
-            document.getElementById('detail-issues').innerHTML = currentTopic.issues; // innerHTML for bolding
-            document.getElementById('detail-resolution').innerHTML = currentTopic.resolution; // innerHTML for formatting
+            document.getElementById('detail-behavior').innerText = topic.focus;
+            document.getElementById('detail-issues').innerHTML = topic.issues;
+            document.getElementById('detail-resolution').innerHTML = topic.resolution;
 
             // Populate Subtopics List
             const subList = document.getElementById('detail-subtopics');
-            subList.innerHTML = currentTopic.subtopics.map(sub => `
+            subList.innerHTML = topic.subtopics.map(sub => `
                 <li class="flex items-start gap-3 p-3 rounded hover:bg-gray-50 transition">
                     <i class="ph-bold ph-check-circle text-accent mt-0.5 min-w-[16px]"></i>
                     <span class="text-secondary text-sm font-medium leading-tight">${sub}</span>
@@ -487,124 +622,7 @@
             detailView.style.display = 'none';
             homeView.style.display = 'block';
             document.getElementById('topics-grid').scrollIntoView({behavior: 'smooth'});
-            currentTopic = null;
         }
-
-        // PDF Generation
-        window.downloadPDF = async () => {
-            if (!currentTopic) return;
-            
-            const btn = document.getElementById('download-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<div class="loader w-4 h-4 border-white border-t-transparent"></div> Generatiing...';
-            btn.disabled = true;
-
-            try {
-                const { jsPDF } = window.jspdf;
-                const doc = new jsPDF();
-
-                // Colors
-                const primaryColor = [0, 64, 128]; // #004080
-                const secondaryColor = [71, 71, 71]; // #474747
-
-                // Header
-                doc.setFillColor(...primaryColor);
-                doc.rect(0, 0, 210, 40, 'F');
-                
-                doc.setTextColor(255, 255, 255);
-                doc.setFont("helvetica", "bold");
-                doc.setFontSize(22);
-                doc.text("BEYOND AWARE", 105, 20, null, null, "center");
-                
-                doc.setFontSize(10);
-                doc.setFont("helvetica", "normal");
-                doc.text("RESOURCE GUIDE", 105, 28, null, null, "center");
-
-                let y = 55;
-
-                // Title
-                doc.setTextColor(...primaryColor);
-                doc.setFontSize(18);
-                doc.setFont("helvetica", "bold");
-                doc.text(currentTopic.title, 20, y);
-                
-                y += 8;
-                doc.setTextColor(...secondaryColor);
-                doc.setFontSize(10);
-                doc.setFont("helvetica", "bold");
-                doc.text(`ORIGINAL TOPIC: ${currentTopic.originalTopic.toUpperCase()}`, 20, y);
-
-                y += 15;
-
-                // Focus Area
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, y-5, 170, 16, 'F');
-                doc.setTextColor(...primaryColor);
-                doc.setFontSize(11);
-                doc.text(`Behavioral Focus: ${currentTopic.focus}`, 25, y+5);
-                
-                y += 25;
-
-                // Helper for text wrapping
-                const splitText = (text, size) => doc.splitTextToSize(text.replace(/<[^>]*>?/gm, ''), 170);
-
-                // Subtopics
-                doc.setFontSize(12);
-                doc.setFont("helvetica", "bold");
-                doc.setTextColor(0, 0, 0);
-                doc.text("5 Key Areas", 20, y);
-                y += 8;
-                doc.setFontSize(10);
-                doc.setFont("helvetica", "normal");
-                doc.setTextColor(...secondaryColor);
-                
-                currentTopic.subtopics.forEach(sub => {
-                    doc.text(`• ${sub}`, 25, y);
-                    y += 6;
-                });
-
-                y += 10;
-
-                // Issues
-                doc.setFontSize(12);
-                doc.setFont("helvetica", "bold");
-                doc.setTextColor(180, 0, 0); // Dark Red
-                doc.text("Issues & Concerns", 20, y);
-                y += 8;
-                doc.setFontSize(10);
-                doc.setFont("helvetica", "normal");
-                doc.setTextColor(...secondaryColor);
-                const issueLines = splitText(currentTopic.issues);
-                doc.text(issueLines, 20, y);
-                y += (issueLines.length * 5) + 10;
-
-                // Resolution
-                doc.setFontSize(12);
-                doc.setFont("helvetica", "bold");
-                doc.setTextColor(...primaryColor);
-                doc.text("Moving Beyond (Resolution)", 20, y);
-                y += 8;
-                doc.setFontSize(10);
-                doc.setFont("helvetica", "normal");
-                doc.setTextColor(...secondaryColor);
-                const resLines = splitText(currentTopic.resolution);
-                doc.text(resLines, 20, y);
-
-                // Footer
-                doc.setFontSize(8);
-                doc.setTextColor(150, 150, 150);
-                doc.text("© 2025 Beyond Aware Initiative", 105, 280, null, null, "center");
-
-                doc.save(`Beyond_Aware_${currentTopic.title.replace(/\s+/g, '_')}.pdf`);
-                
-            } catch (e) {
-                console.error(e);
-                alert("Could not generate PDF. Please try again.");
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        };
 
         // Initialize
         renderCards();
