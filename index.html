@@ -30,20 +30,62 @@
         }
     </script>
     <style>
+        /* ---------------------------------- */
+        /* --- LIQUID GLASS DESIGN STYLES --- */
+        /* ---------------------------------- */
+
+        /* 1. Base Body/Background (Animated Fluidity) */
         body {
-            background-color: #fafeff;
+            /* Fallback colors */
+            background: linear-gradient(135deg, #e0f7fa, #c5cae9); 
+            min-height: 100vh;
             color: #474747;
             -webkit-font-smoothing: antialiased;
+            
+            /* Animated background */
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        .card-hover {
+        /* 2. Glass Panel Base Style */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.3); /* Translucent White */
+            box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.15); /* Soft outer shadow */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Light inner border */
             transition: all 0.3s ease;
         }
+
+        /* 3. Navigation Bar (Darker Glass) */
+        .glass-nav {
+            background: rgba(0, 64, 128, 0.8); /* Primary color translucency */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        }
+
+        /* 4. Footer (Dark Glass) */
+        .glass-footer {
+            background: rgba(71, 71, 71, 0.85); /* Secondary color translucency */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* Utility overrides */
         .card-hover:active {
             transform: scale(0.98);
         }
 
-        /* Hide scrollbar for clean horizontal scroll */
+        /* Hide scrollbar */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -81,7 +123,7 @@
 <body class="flex flex-col min-h-screen">
 
     <!-- Navigation -->
-    <nav class="bg-primary text-white shadow-lg sticky top-0 z-50">
+    <nav class="glass-nav text-white sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="showHome()">
                 <i class="ph-fill ph-chart-bar text-accent text-2xl"></i>
@@ -91,32 +133,34 @@
     </nav>
 
     <!-- Main Content Area -->
-    <main id="app" class="flex-grow max-w-4xl mx-auto w-full">
+    <main id="app" class="flex-grow max-w-4xl mx-auto w-full p-4">
         
         <!-- VIEW: HOME -->
         <div id="home-view" class="fade-in">
-            <!-- Hero Section -->
-            <section class="px-6 py-12 text-center bg-gradient-to-b from-blue-50 to-transparent">
-                <h2 class="text-4xl font-bold text-primary mb-2">Beyond Aware</h2>
-                <h3 class="text-xl font-semibold text-secondary mb-6 tracking-wide">Where Understanding Becomes Behavior</h3>
-                
-                <div class="max-w-xl mx-auto relative">
-                    <div class="absolute -left-4 -top-4 text-accent/20 text-6xl font-serif">“</div>
-                    <p class="text-secondary text-lg leading-relaxed italic z-10 relative">
-                        True change doesn't happen when we just know better.<br>
-                        It happens when we do better.<br>
-                        <span class="font-bold text-primary not-italic mt-2 block">Know. Understand. Transform.</span>
-                    </p>
-                    <div class="absolute -right-4 -bottom-4 text-accent/20 text-6xl font-serif">”</div>
+            <!-- Hero Section (Subtle Glass effect on the text container) -->
+            <section class="px-6 py-12 text-center">
+                <div class="glass-panel p-8 rounded-3xl mb-8">
+                    <h2 class="text-4xl font-bold text-primary mb-2">Beyond Aware</h2>
+                    <h3 class="text-xl font-semibold text-secondary mb-6 tracking-wide">Where Understanding Becomes Behavior</h3>
+                    
+                    <div class="max-w-xl mx-auto relative">
+                        <div class="absolute -left-4 -top-4 text-accent/20 text-6xl font-serif">“</div>
+                        <p class="text-secondary text-lg leading-relaxed italic z-10 relative">
+                            True change doesn't happen when we just know better.<br>
+                            It happens when we do better.<br>
+                            <span class="font-bold text-primary not-italic mt-2 block">Know. Understand. Transform.</span>
+                        </p>
+                        <div class="absolute -right-4 -bottom-4 text-accent/20 text-6xl font-serif">”</div>
+                    </div>
                 </div>
 
-                <button onclick="document.getElementById('topics-grid').scrollIntoView({behavior: 'smooth'})" class="mt-8 bg-primary text-white px-8 py-3 rounded-full font-semibold shadow-lg active:bg-blue-900 hover:bg-blue-800 transition transform hover:-translate-y-1 flex items-center gap-2 mx-auto">
+                <button onclick="document.getElementById('topics-grid').scrollIntoView({behavior: 'smooth'})" class="mt-4 bg-primary text-white px-8 py-3 rounded-full font-semibold shadow-lg active:bg-blue-900 hover:bg-blue-800 transition transform hover:-translate-y-1 flex items-center gap-2 mx-auto">
                     Start the Shift <i class="ph-bold ph-arrow-down"></i>
                 </button>
             </section>
 
             <!-- Topics Grid -->
-            <section id="topics-grid" class="px-4 py-8">
+            <section id="topics-grid" class="py-8">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5" id="cards-container">
                     <!-- Cards injected via JS -->
                 </div>
@@ -125,9 +169,9 @@
 
         <!-- VIEW: TOPIC DETAIL -->
         <div id="detail-view" class="hidden">
-            <!-- Sticky Sub-header -->
-            <div class="bg-white border-b sticky top-[60px] z-40 px-4 py-3 flex items-center gap-3 shadow-sm">
-                <button onclick="showHome()" class="text-secondary hover:text-primary">
+            <!-- Sticky Sub-header (Glass panel for clean transition) -->
+            <div class="glass-panel rounded-t-none rounded-b-2xl border-t-0 sticky top-[60px] z-40 px-4 py-3 flex items-center gap-3 shadow-md mb-4">
+                <button onclick="showHome()" class="text-secondary hover:text-primary p-2 rounded-full hover:bg-white/50 transition">
                     <i class="ph-bold ph-arrow-left text-xl"></i>
                 </button>
                 <h2 id="detail-title" class="font-bold text-lg text-primary truncate">Topic Title</h2>
@@ -135,10 +179,9 @@
 
             <div class="px-5 py-8 animate-fade-in">
                 <!-- Topic Intro -->
-                <div class="mb-8">
-                    <span class="text-xs font-bold tracking-wider text-accent uppercase bg-primary px-2 py-1 rounded-sm">Focus Area</span>
+                <div class="mb-8 glass-panel p-6">
+                    <span class="text-xs font-bold tracking-wider text-accent uppercase bg-primary px-2 py-1 rounded-full">Focus Area</span>
                     <h1 id="detail-hero-title" class="text-3xl font-bold text-primary mt-3 mb-4 leading-tight"></h1>
-                    <!-- detail-desc now accepts HTML for full content -->
                     <div class="text-secondary leading-relaxed space-y-4" id="detail-desc">
                         Deep dive content loading...
                     </div>
@@ -148,7 +191,7 @@
                 <div class="space-y-6">
                     
                     <!-- Section: The 5 Sub-Topics -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                    <div class="glass-panel p-5">
                         <h3 class="font-bold text-primary text-lg mb-4 flex items-center gap-2">
                             <i class="ph-duotone ph-list-numbers"></i> 5 Key Areas
                         </h3>
@@ -158,7 +201,7 @@
                     </div>
 
                     <!-- Section: Behavioral Focus -->
-                    <div class="bg-blue-50 rounded-xl p-5 border-l-4 border-primary">
+                    <div class="glass-panel p-5 border-l-4 border-primary">
                         <h3 class="font-bold text-primary mb-2">Behavioral Focus</h3>
                         <p id="detail-behavior" class="text-sm text-gray-700 italic">
                             <!-- Injected -->
@@ -166,7 +209,7 @@
                     </div>
 
                     <!-- Section: Issues & Concerns -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+                    <div class="glass-panel p-5">
                         <h3 class="font-bold text-red-700 mb-3 flex items-center gap-2">
                             <i class="ph-fill ph-warning-circle"></i> Issues & Concerns
                         </h3>
@@ -176,7 +219,7 @@
                     </div>
 
                     <!-- Section: Moving Beyond (Resolution) -->
-                    <div class="bg-accent/10 rounded-xl p-5 border border-accent/30">
+                    <div class="glass-panel p-5 border border-accent/30">
                         <h3 class="font-bold text-primary mb-3 flex items-center gap-2">
                             <i class="ph-fill ph-rocket-launch text-primary"></i> Moving Beyond
                         </h3>
@@ -186,15 +229,13 @@
                     </div>
 
                 </div>
-                
-                <!-- Removed Download Button as requested -->
             </div>
         </div>
 
     </main>
 
     <!-- Footer / Contact Section -->
-    <footer class="bg-secondary text-white mt-auto rounded-t-3xl shadow-[0_-5px_15px_rgba(0,0,0,0.1)]">
+    <footer class="glass-footer text-white mt-auto rounded-t-3xl">
         <div class="max-w-4xl mx-auto px-6 py-10">
             
             <div class="mb-8 text-center">
@@ -202,7 +243,7 @@
                 <p class="text-gray-300 text-sm">Share your thoughts, stories, or ask for help.</p>
             </div>
 
-            <form id="contactForm" class="space-y-4 max-w-lg mx-auto">
+            <form id="contactForm" class="space-y-4 max-w-lg mx-auto p-6 glass-panel border-gray-500/50" style="background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -267,7 +308,7 @@
                              2. <strong>Barrier Discipline:</strong> Refusing to compromise on protection regardless of the heat of the moment. If they respect you, they respect the barrier.<br>
                              3. <strong>Clinical Adherence:</strong> If diagnosed, sticking to U=U (Undetectable = Untransmittable) not just as treatment, but as a moral obligation to partners.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Silent Assumption</h4>
                                 <p class="text-sm italic mb-4 text-secondary">Mark and Sarah had been dating for three months. They felt a deep emotional connection. One night, in the heat of the moment, Mark whispered, "I trust you," and they skipped protection. They didn't test. They didn't talk. They just felt "safe." Six months later, a routine checkup revealed a reality that "trust" couldn't prevent.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -302,7 +343,7 @@
                              2. <strong>The 'After' Check-In:</strong> If fear froze you in the moment, you must act immediately after. Privately validating the victim destroys the isolation the bully tried to create.<br>
                              3. <strong>The Documentation Habit:</strong> In adult or workplace settings, keep a factual log of incidents. Harassment relies on "he said, she said"; documentation relies on patterns.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Group Chat</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A humiliating photo of a coworker was sent to the office group chat. 15 people saw it. 3 added 'laugh' reactions. 12 people said nothing. Later, everyone told the victim, "I didn't think it was funny." But to the victim, looking at the screen, the silence of the 12 looked exactly like the laughter of the 3.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -337,7 +378,7 @@
                              2. <strong>The Verification Vow:</strong> Treat every AI assertion as a rumor until verified. If you cannot find the primary source, delete it.<br>
                              3. <strong>The Privacy Firewall:</strong> Never feed the machine what you wouldn't shout in a crowded room. Your private data pays for the service.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Non-Existent Fact</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A young professional wanted to impress his boss with a research report. He used AI to find supporting statistics. The AI provided a perfect data point from a "2023 Study." He put it in his slide deck. During the presentation, the client asked for the source. He couldn't find it because it didn't exist. The AI had hallucinated a believable lie. In seconds, his hard work was overshadowed by his lack of integrity.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -372,7 +413,7 @@
                              2. <strong>The Convenience Audit:</strong> Before acting, ask: "If everyone did this, would the system collapse?" If the answer is yes, don't do it.<br>
                              3. <strong>The Burden Check:</strong> Actively look for ways you might be invisible work for others (e.g., janitors, servers, neighbors) and eliminate it.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The "Quick" Stop</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A driver put his hazards on and blocked a narrow lane to run into a store. "I'll just be a minute," he told himself. Behind him, a delivery truck got stuck, blocking the intersection. A gridlock formed. Three blocks away, an ambulance was forced to reroute, losing four critical minutes. The driver got his coffee and left, never knowing that his "one minute" of convenience cost a stranger their chance at survival.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -407,7 +448,7 @@
                              2. <strong>The Friction Pause:</strong> When triggered, force a delay. Never reply while your heart rate is elevated. Draft it, sleep on it, then delete it.<br>
                              3. <strong>The Humanize First Rule:</strong> Before attacking an opinion, acknowledge the person. "I see your point, but..." is vastly different from "You are an idiot."
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Resurfaced Post</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A talented applicant was the top candidate for a dream job. During the final background check, the HR team found a series of aggressive, mocking comments he had made on a public forum three years prior. He argued, "That was just the internet, it wasn't real." The company replied, "How you treat strangers when you think you're anonymous tells us exactly who you are." He didn't get the job.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -442,7 +483,7 @@
                              2. <strong>Channel Discipline:</strong> Use writing for documentation (alignment). Use calls/meetings for nuance (empathy). Use quick chats for status (efficiency). Never use email for conflict resolution.<br>
                              3. <strong>Confirmation Protocol:</strong> Mandate a simple "closing the loop" confirmation for all critical tasks: "Understood. I'll have the report by Friday at 3 PM, focusing on Q3 results."
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Muted Email</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A manager sent a team-wide email detailing a new client rollout, using slightly ambiguous language about who was responsible for the final testing phase. Everyone on the team assumed someone else was handling it, and no one replied to confirm their specific role. The project launched with a critical bug, costing the company the client. The failure wasn't due to incompetence, but to the collective failure to say, "I am responsible for X, correct?"</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -477,7 +518,7 @@
                              2. <strong>Value Vetting:</strong> Before purchasing an expensive item, ask the child: "How will this help you serve others or advance your character?"<br>
                              3. <strong>The Struggle Standard:</strong> Stop intervening the moment a child struggles. Coaching through discomfort builds emotional immunity that no amount of money can buy.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Empty Trophy Case</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A high school graduate, gifted with every opportunity—tutors, private clubs, top-tier university paid for—suffered a panic attack when he was forced to choose his major. His parents had planned his life meticulously, ensuring success but preventing him from ever encountering an internal challenge. Now, facing his first truly independent decision, he was emotionally paralyzed. All the provision resulted in a crisis of identity and competence.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -512,7 +553,7 @@
                              2. <strong>The Cleanliness Contract:</strong> Never leave a place without ensuring the next person who uses it finds it immaculate. Do not rely on staff to clean up your deliberate mess.<br>
                              3. <strong>The Flow Protocol:</strong> Keep walkways and doorways clear. The group of people standing and chatting in the middle of a doorway is a collective sign of spatial unawareness.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Headphone Leak</h4>
                                 <p class="text-sm italic mb-4 text-secondary">A student was studying for a major exam in a quiet café. A group of four friends sat nearby. While three used headphones, the fourth had his music leaking loudly from his earbuds. The student was too polite to ask him to turn it down, but the constant, muffled bass slowly destroyed her focus. She ultimately packed up, losing an hour of precious study time, all because one person prioritized their minor convenience (not pushing the earbud in fully) over the shared atmosphere.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -547,7 +588,7 @@
                              2. <strong>The Daily Dependence Habit:</strong> Starting and ending the day acknowledging that salvation is maintained by God's grace, not human performance.<br>
                              3. <strong>Living Out the Fruit:</strong> Good works (all the other 8 topics) become the result of salvation, not the requirement for it.
                              <br><br>
-                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg border-l-4 border-primary">
+                             <div class="mt-6 p-5 bg-blue-50/80 rounded-lg">
                                 <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i class="ph-fill ph-book-open-text"></i> Real-Life Reflection: The Missing Peace</h4>
                                 <p class="text-sm italic mb-4 text-secondary">David was outwardly successful in all 8 areas: he volunteered, donated, never used harsh words online, and was impeccable in his professional life. Yet, every night, he felt a crushing spiritual emptiness. He believed he was "doing enough," but the bar of his own goodness kept shifting, leaving him constantly exhausted and judgmental of others. He mistook his moral discipline for a saving relationship, leading to profound internal dissatisfaction and spiritual fatigue.</p>
                                 <p class="font-bold text-xs uppercase tracking-wide text-primary mb-2">Deep Dive:</p>
@@ -568,12 +609,12 @@
         // Render Cards
         function renderCards() {
             cardsContainer.innerHTML = topicsData.map(topic => `
-                <div onclick="openTopic(${topic.id})" class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 card-hover cursor-pointer flex flex-col items-center text-center h-full">
-                    <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-4 text-2xl ${topic.color}">
+                <div onclick="openTopic(${topic.id})" class="glass-panel p-6 card-hover cursor-pointer flex flex-col items-center text-center h-full">
+                    <div class="w-12 h-12 rounded-full bg-white/70 flex items-center justify-center mb-4 text-2xl ${topic.color}">
                         <i class="ph-fill ${topic.icon}"></i>
                     </div>
                     <h3 class="font-bold text-primary text-xl mb-1">${topic.title}</h3>
-                    <p class="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-3">${topic.originalTopic}</p>
+                    <p class="text-xs text-gray-600 uppercase tracking-widest font-semibold mb-3">${topic.originalTopic}</p>
                     
                     <div class="mt-auto pt-4 text-accent text-sm font-bold flex items-center gap-2 group">
                         Go Beyond <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
@@ -604,7 +645,7 @@
             // Populate Subtopics List
             const subList = document.getElementById('detail-subtopics');
             subList.innerHTML = topic.subtopics.map(sub => `
-                <li class="flex items-start gap-3 p-3 rounded hover:bg-gray-50 transition">
+                <li class="flex items-start gap-3 p-3 rounded hover:bg-white/50 transition">
                     <i class="ph-bold ph-check-circle text-accent mt-0.5 min-w-[16px]"></i>
                     <span class="text-secondary text-sm font-medium leading-tight">${sub}</span>
                 </li>
